@@ -103,7 +103,22 @@ public class CDVBroadcaster extends CordovaPlugin {
      */
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if( action.equals("fireNativeEvent")) {
+        
+
+        //labe paolo: workaround for issue about not exiting from app with backbutton after calling broadcaster
+        if(action.equals("finishActivity"))
+        {
+          for( BroadcastReceiver r : receiverMap.values() ) {
+            unregisterReceiver(r);
+          }
+
+          receiverMap.clear();
+
+          cordova.getActivity().finish();
+        }
+
+
+        else if( action.equals("fireNativeEvent")) {
 
             final String eventName = args.getString(0);
             if( eventName==null || eventName.isEmpty() ) {
