@@ -103,7 +103,7 @@ public class CDVBroadcaster extends CordovaPlugin {
      */
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        
+
 
         //labe paolo: workaround for issue about not exiting from app with backbutton after calling broadcaster
         if(action.equals("finishActivity"))
@@ -115,6 +115,9 @@ public class CDVBroadcaster extends CordovaPlugin {
           receiverMap.clear();
 
           cordova.getActivity().finish();
+
+          callbackContext.success();
+          return true;
         }
 
 
